@@ -49,14 +49,23 @@
       <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CSharp" />
+    <Reference Include="NLog, Version=4.0.0.0, Culture=neutral, PublicKeyToken=5120e14c03d0593c, processorArchitecture=MSIL">
+      <HintPath>..\packages\NLog.4.7.5\lib\net45\NLog.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Drawing" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.Security" />
+    <Reference Include="System.ServiceModel" />
+    <Reference Include="System.Transactions" />
     <Reference Include="System.Web.Entity" />
     <Reference Include="System.Web.ApplicationServices" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
     <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="System.Web.Services" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Web" />
     <Reference Include="System.Web.Abstractions" />
@@ -173,7 +182,6 @@
   <ItemGroup>
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
-    <Compile Include="App_Start\IdentityConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
@@ -205,15 +213,61 @@
     <Compile Include="Areas\HelpPage\SampleGeneration\SampleDirection.cs" />
     <Compile Include="Areas\HelpPage\SampleGeneration\TextSample.cs" />
     <Compile Include="Areas\HelpPage\XmlDocumentationProvider.cs" />
-    <Compile Include="Controllers\AccountController.cs" />
-    <Compile Include="Controllers\HomeController.cs" />
-    <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="BLL\CentralPayLogic.cs" />
+    <Compile Include="BLL\ResponseCodeMap.cs" />
+    <Compile Include="BLL\Utils.cs" />
+    <Compile Include="core.asmx.cs">
+      <DependentUpon>core.asmx</DependentUpon>
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="CustomObject\RequeryMandateRequest.cs" />
+    <Compile Include="CustomObject\RequeryMandateResponse.cs" />
+    <Compile Include="CustomObject\CancelMandateResponse.cs" />
+    <Compile Include="CustomObject\CancelMandateRequest.cs" />
+    <Compile Include="CustomObject\GenerateOTPRequestEx.cs" />
+    <Compile Include="CustomObject\GenerateOTPRequest.cs" />
+    <Compile Include="CustomObject\GenerateOTPResponseEx.cs" />
+    <Compile Include="CustomObject\ValidateOTPRequestExt.cs" />
+    <Compile Include="CustomObject\ValidateOTPRequest.cs" />
+    <Compile Include="CustomObject\GenerateOTPResponse.cs" />
+    <Compile Include="CustomObject\ValidateOTPResponseExt.cs" />
+    <Compile Include="CustomObject\ValidateOTPResponse.cs" />
+    <Compile Include="CustomObject\CreateMandateResponse.cs" />
+    <Compile Include="CustomObject\CreateMandateRequest.cs" />
+    <Compile Include="DAO\CentralPayDataAccess.cs" />
+    <Compile Include="DAO\CentralPayModel.Context.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CentralPayModel.Context.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAO\CentralPayModel.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CentralPayModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAO\CentralPayModel.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>CentralPayModel.edmx</DependentUpon>
+    </Compile>
+    <Compile Include="DAO\CentralPayOtp.cs">
+      <DependentUpon>CentralPayModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAO\ExceptionLog.cs">
+      <DependentUpon>CentralPayModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAO\ExceptionLogRepo.cs" />
+    <Compile Include="DAO\MandateLog.cs">
+      <DependentUpon>CentralPayModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAO\MandateRepo.cs" />
+    <Compile Include="DAO\RequestResponseLog.cs">
+      <DependentUpon>CentralPayModel.tt</DependentUpon>
+    </Compile>
+    <Compile Include="DAO\RequestResponseRepository.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\AccountBindingModels.cs" />
-    <Compile Include="Models\AccountViewModels.cs" />
-    <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Providers\ApplicationOAuthProvider.cs" />
     <Compile Include="Results\ChallengeResult.cs" />
@@ -223,6 +277,18 @@
     <Content Include="Areas\HelpPage\HelpPage.css" />
     <Content Include="Content\bootstrap.css" />
     <Content Include="Content\bootstrap.min.css" />
+    <Content Include="core.asmx" />
+    <Content Include="DAO\CentralPayModel.Context.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CentralPayModel.edmx</DependentUpon>
+      <LastGenOutput>CentralPayModel.Context.cs</LastGenOutput>
+    </Content>
+    <Content Include="DAO\CentralPayModel.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <DependentUpon>CentralPayModel.edmx</DependentUpon>
+      <LastGenOutput>CentralPayModel.cs</LastGenOutput>
+    </Content>
+    <Content Include="dbscript\schema.sql" />
     <Content Include="favicon.ico" />
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
@@ -247,6 +313,19 @@
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\CollectionModelDescription.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\DisplayTemplates\ApiGroup.cshtml" />
     <Content Include="Areas\HelpPage\Views\Help\Api.cshtml" />
+    <Content Include="NLog.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <EntityDeploy Include="DAO\CentralPayModel.edmx">
+      <Generator>EntityModelCodeGenerator</Generator>
+      <LastGenOutput>CentralPayModel.Designer.cs</LastGenOutput>
+    </EntityDeploy>
+    <Content Include="DAO\CentralPayModel.edmx.diagram">
+      <DependentUpon>CentralPayModel.edmx</DependentUpon>
+    </Content>
+    <None Include="NLog.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Scripts\jquery-1.10.2.intellisense.js" />
     <Content Include="Scripts\jquery-1.10.2.js" />
     <Content Include="Scripts\jquery-1.10.2.min.js" />
@@ -270,12 +349,12 @@
     <Content Include="Scripts\_references.js" />
     <Content Include="Views\Web.config" />
     <Content Include="Views\_ViewStart.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Shared\Error.cshtml" />
-    <Content Include="Views\Shared\_Layout.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Controllers\" />
+    <Folder Include="Models\" />
+    <Folder Include="NewFolder1\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -284,6 +363,9 @@
     <Content Include="packages.config" />
     <None Include="Project_Readme.html" />
     <Content Include="Scripts\jquery-1.10.2.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
