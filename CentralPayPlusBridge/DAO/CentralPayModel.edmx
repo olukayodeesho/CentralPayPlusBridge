@@ -11,11 +11,12 @@
           </Key>
           <Property Name="Id" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="MandateCodeId" Type="bigint" Nullable="false" />
-          <Property Name="ReferenceNumber" Type="nchar" MaxLength="10" Nullable="false" />
-          <Property Name="otp" Type="text" Nullable="false" />
+          <Property Name="ReferenceNumber" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="otp" Type="varchar" MaxLength="500" Nullable="false" />
           <Property Name="DateGenerated" Type="datetime" Nullable="false" />
           <Property Name="IsUsed" Type="bit" />
           <Property Name="DateUsed" Type="datetime" />
+          <Property Name="Amount" Type="decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="ExceptionLog">
           <Key>
@@ -43,7 +44,7 @@
           <Property Name="MandateCode" Type="varchar" MaxLength="50" />
           <Property Name="ResponseCode" Type="varchar" MaxLength="50" />
           <Property Name="DateCreated" Type="datetime" Nullable="false" />
-          <Property Name="DateUpdated" Type="datetime" Nullable="false" />
+          <Property Name="DateUpdated" Type="datetime" />
           <Property Name="IsCancelled" Type="bit" Nullable="false" />
           <Property Name="DateCancelled" Type="datetime" />
         </EntityType>
@@ -91,12 +92,13 @@
           </Key>
           <Property Name="Id" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="MandateCodeId" Type="Int64" Nullable="false" />
-          <Property Name="ReferenceNumber" Type="String" MaxLength="10" FixedLength="true" Unicode="true" Nullable="false" />
-          <Property Name="otp" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="ReferenceNumber" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="otp" Type="String" MaxLength="500" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="DateGenerated" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IsUsed" Type="Boolean" />
           <Property Name="DateUsed" Type="DateTime" Precision="3" />
           <NavigationProperty Name="MandateLog" Relationship="CentralPayBridgeModel.FK_CentralPayOtp_MandateLog" FromRole="CentralPayOtp" ToRole="MandateLog" />
+          <Property Name="Amount" Type="Decimal" Precision="18" Scale="2" />
         </EntityType>
         <EntityType Name="ExceptionLog">
           <Key>
@@ -124,7 +126,7 @@
           <Property Name="MandateCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="ResponseCode" Type="String" MaxLength="50" FixedLength="false" Unicode="false" />
           <Property Name="DateCreated" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="DateUpdated" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="DateUpdated" Type="DateTime" Precision="3" />
           <Property Name="IsCancelled" Type="Boolean" Nullable="false" />
           <Property Name="DateCancelled" Type="DateTime" Precision="3" />
           <NavigationProperty Name="CentralPayOtps" Relationship="CentralPayBridgeModel.FK_CentralPayOtp_MandateLog" FromRole="MandateLog" ToRole="CentralPayOtp" />
@@ -172,6 +174,7 @@
           <EntitySetMapping Name="CentralPayOtps">
             <EntityTypeMapping TypeName="CentralPayBridgeModel.CentralPayOtp">
               <MappingFragment StoreEntitySet="CentralPayOtp">
+                <ScalarProperty Name="Amount" ColumnName="Amount" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="MandateCodeId" ColumnName="MandateCodeId" />
                 <ScalarProperty Name="ReferenceNumber" ColumnName="ReferenceNumber" />

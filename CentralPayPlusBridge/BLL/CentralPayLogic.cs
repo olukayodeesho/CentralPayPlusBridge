@@ -25,38 +25,46 @@ namespace CentralPayPlusBridge.BLL
                 CreateMandateRequest obj = ser.Deserialize<CreateMandateRequest>(createMandateStr);
                 if (obj != null)
                 {
-                    MandateLog mlog = new MandateLog()
+                    if (!string.IsNullOrEmpty( obj.BillerID) || !string.IsNullOrEmpty(obj.BillerName) || !string.IsNullOrEmpty(obj.BillerTransId) || !string.IsNullOrEmpty(obj.AcctName) || !string.IsNullOrEmpty(obj.AcctNumber) || !string.IsNullOrEmpty(obj.BankCode))
                     {
-                        AccountName = obj.AcctName,
-                        BankCode = obj.BankCode,
-                        AccountNumber = obj.AcctNumber,
-                        BillerId = obj.BillerID,
-                        BillerName = obj.BillerName,
-                        BillerTransId = obj.BillerTransId,
-                        DateCreated = DateTime.Now,
-                        HashValue = obj.HashValue,
-                        TransType = obj.TransType
-                    };
+                        MandateLog mlog = new MandateLog()
+                        {
+                            AccountName = obj.AcctName,
+                            BankCode = obj.BankCode,
+                            AccountNumber = obj.AcctNumber,
+                            BillerId = obj.BillerID,
+                            BillerName = obj.BillerName,
+                            BillerTransId = obj.BillerTransId,
+                            DateCreated = DateTime.Now,
+                            HashValue = obj.HashValue,
+                            TransType = obj.TransType
+                        };
 
-                    bool isSaved = MandateRepo.SaveMandate(mlog);
+                        bool isSaved = MandateRepo.SaveMandate(mlog);
 
-                    responseCode = isSaved ? ResponseCodeMap.Successful : ResponseCodeMap.UnknownError;
+                        responseCode = isSaved ? ResponseCodeMap.Successful : ResponseCodeMap.UnknownError;
 
-                    objResp = new CreateMandateResponse
+                        objResp = new CreateMandateResponse
+                        {
+                            AcctName = obj.AcctName,
+                            AcctNumber = obj.AcctNumber,
+                            BankCode = obj.BankCode,
+                            BillerID = obj.BillerID,
+                            BillerName = obj.BillerName,
+                            BillerTransId = obj.BillerTransId,
+                            MandateCode = isSaved ? mlog.MandateCode : "",
+                            TransType = obj.TransType,
+                            ResponseCode = responseCode
+
+                        };
+                    }
+                    else
                     {
-                        AcctName = obj.AcctName,
-                        AcctNumber = obj.AcctNumber,
-                        BankCode = obj.BankCode,
-                        BillerID = obj.BillerID,
-                        BillerName = obj.BillerName,
-                        BillerTransId = obj.BillerTransId,
-                        MandateCode = isSaved ? mlog.MandateCode : "",
-                        TransType = obj.TransType,
-                        ResponseCode = responseCode
-
-                    };
+                        objResp = new CreateMandateResponse { ResponseCode = ResponseCodeMap.InvalidXml };
+                    }
                 }
-                else {
+                else
+                {
                     objResp = new CreateMandateResponse { ResponseCode = ResponseCodeMap.InvalidXml };
                 }
                 xmlOutputData = ser.Serialize<CreateMandateResponse>(objResp);
@@ -69,7 +77,7 @@ namespace CentralPayPlusBridge.BLL
 
         public static string DoMandateCancellation(string requestStr)
         {
-           
+
             Serializer ser = new Serializer();
             string xmlOutputData = string.Empty;
             string responseCode = string.Empty;
@@ -81,7 +89,7 @@ namespace CentralPayPlusBridge.BLL
                 CancelMandateRequest obj = ser.Deserialize<CancelMandateRequest>(requestStr);
                 if (obj != null)
                 {
-                    
+
 
                     bool isSaved = MandateRepo.CancelMandate(obj.MandateCode, obj.BillerID);
 
@@ -96,8 +104,8 @@ namespace CentralPayPlusBridge.BLL
                         MandateCode = obj.MandateCode,
                         TransType = obj.TransType,
                         ResponseCode = responseCode,
-                         HashValue = obj.HashValue
-                       
+                        HashValue = obj.HashValue
+
 
                     };
                 }
@@ -133,24 +141,25 @@ namespace CentralPayPlusBridge.BLL
                         {
                             DateGenerated = DateTime.Now,
                             IsUsed = false,
-                             MandateCodeId = mandate.Id, 
-                              otp = Utils.GenerateNewOtp(), 
-                               ReferenceNumber = Guid.NewGuid().ToString()
+                            MandateCodeId = mandate.Id,
+                            otp = Utils.GenerateNewOtp(),
+                            Amount = Convert.ToDecimal( obj.Amount),
+                            ReferenceNumber = Guid.NewGuid().ToString()
                         };
-
                         bool isSaved = MandateRepo.SaveCentralPayOtp(otp);
 
                         responseCode = isSaved ? ResponseCodeMap.Successful : ResponseCodeMap.UnknownError;
 
                         objResp = new GenerateOTPResponse
                         {
-                         
+
                             BankCode = obj.BankCode,
                             BillerID = obj.BillerID,
                             BillerName = obj.BillerName,
                             BillerTransId = obj.BillerTransId,
                             MandateCode = obj.MandateCode,
                             TransType = obj.TransType,
+                            Amount = obj.Amount, 
                             ResponseCode = responseCode
 
                         };
@@ -161,7 +170,7 @@ namespace CentralPayPlusBridge.BLL
                 {
                     objResp = new GenerateOTPResponse { ResponseCode = ResponseCodeMap.InvalidXml };
                 }
-            
+
                 xmlOutputData = ser.Serialize<GenerateOTPResponse>(objResp);
             }
             catch (Exception e) { ExceptionLogRepo.SaveExceptionLog(e); }
@@ -192,6 +201,7 @@ namespace CentralPayPlusBridge.BLL
                             IsUsed = false,
                             MandateCodeId = mandate.Id,
                             otp = Utils.GenerateNewOtp(),
+                            Amount = Convert.ToDecimal( obj.Amount),
                             ReferenceNumber = Guid.NewGuid().ToString()
                         };
 
@@ -240,9 +250,9 @@ namespace CentralPayPlusBridge.BLL
                 ValidateOTPRequest obj = ser.Deserialize<ValidateOTPRequest>(requestStr);
                 if (obj != null)
                 {
-                    bool isSaved = MandateRepo.ValidateOtp(obj.MandateCode, obj.BillerID);
+                    bool isSaved = MandateRepo.ValidateOtp(obj.MandateCode, obj.OTP, Convert.ToDecimal( obj.Amount));
 
-                    responseCode = isSaved ? ResponseCodeMap.Successful : ResponseCodeMap.UnknownError;
+                    responseCode = isSaved ? ResponseCodeMap.Successful : ResponseCodeMap.InvalidXml;
 
                     objResp = new ValidateOTPResponse
                     {
@@ -252,6 +262,7 @@ namespace CentralPayPlusBridge.BLL
                         BillerTransId = obj.BillerTransId,
                         MandateCode = obj.MandateCode,
                         TransType = obj.TransType,
+                        Amount = obj.Amount,
                         ResponseCode = responseCode,
                         HashValue = obj.HashValue
 
@@ -283,9 +294,9 @@ namespace CentralPayPlusBridge.BLL
                 ValidateOTPRequestEx obj = ser.Deserialize<ValidateOTPRequestEx>(requestStr);
                 if (obj != null)
                 {
-                    bool isSaved = MandateRepo.ValidateOtp(obj.MandateCode, obj.BillerID);
+                    bool isSaved = MandateRepo.ValidateOtp(obj.MandateCode, obj.OTP, Convert.ToDecimal( obj.Amount));
 
-                    responseCode = isSaved ? ResponseCodeMap.Successful : ResponseCodeMap.UnknownError;
+                    responseCode = isSaved ? ResponseCodeMap.Successful : ResponseCodeMap.InvalidXml;
 
                     objResp = new ValidateOTPResponseEx
                     {
@@ -296,6 +307,7 @@ namespace CentralPayPlusBridge.BLL
                         MandateCode = obj.MandateCode,
                         TransType = obj.TransType,
                         ResponseCode = responseCode,
+                        Amount = obj.Amount,
                         HashValue = obj.HashValue
 
 
@@ -341,7 +353,7 @@ namespace CentralPayPlusBridge.BLL
                         TransType = mandate.TransType,
                         ResponseCode = responseCode,
                         HashValue = mandate.HashValue,
-                      
+
 
 
                     };
@@ -377,10 +389,12 @@ namespace CentralPayPlusBridge.BLL
         public string Serialize<T>(T ObjectToSerialize)
         {
             XmlSerializer xmlSerializer = new XmlSerializer(ObjectToSerialize.GetType());
-
+            XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
+            ns.Add("", "");
+             
             using (StringWriter textWriter = new StringWriter())
             {
-                xmlSerializer.Serialize(textWriter, ObjectToSerialize);
+                xmlSerializer.Serialize(textWriter, ObjectToSerialize, ns);
                 return textWriter.ToString();
             }
         }

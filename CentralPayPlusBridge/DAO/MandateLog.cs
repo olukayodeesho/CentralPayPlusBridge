@@ -32,7 +32,7 @@ namespace CentralPayPlusBridge.DAO
         public string MandateCode { get; set; }
         public string ResponseCode { get; set; }
         public System.DateTime DateCreated { get; set; }
-        public System.DateTime DateUpdated { get; set; }
+        public Nullable<System.DateTime> DateUpdated { get; set; }
         public bool IsCancelled { get; set; }
         public Nullable<System.DateTime> DateCancelled { get; set; }
     

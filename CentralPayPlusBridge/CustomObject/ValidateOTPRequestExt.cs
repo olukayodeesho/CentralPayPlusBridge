@@ -10,7 +10,7 @@ namespace CentralPayPlusBridge.CustomObject
         public string AcctNumber { get; set; }
         public string AcctName { get; set; }
         public string MandateCode { get; set; }
-  
+        public string OTP { get; set; }
         public string TransType { get; set; }
         public string BankCode { get; set; }
         public string BillerID { get; set; }

@@ -12,13 +12,15 @@ namespace CentralPayPlusBridge.DAO
         {
             try
             {
+                Exception innerMostException = e; 
+                while (innerMostException.InnerException != null) { innerMostException = innerMostException.InnerException;  }
                 using (var context = new CentralPayBridgeEntities())
                 {
                     var ex = new ExceptionLog();
                     ex.ErrorDatetime = DateTime.Now;
-                    ex.ErrorMessage = e.Message;
-                    ex.ErrorSource = e.Source;
-                    ex.ErrorStacktrace = e.StackTrace;
+                    ex.ErrorMessage = innerMostException.Message;
+                    ex.ErrorSource = innerMostException.Source;
+                    ex.ErrorStacktrace = innerMostException.StackTrace;
 
                     context.ExceptionLogs.Add(ex);
                     context.SaveChanges();

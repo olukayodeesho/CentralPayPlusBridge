@@ -21,6 +21,7 @@ namespace CentralPayPlusBridge.DAO
         public System.DateTime DateGenerated { get; set; }
         public Nullable<bool> IsUsed { get; set; }
         public Nullable<System.DateTime> DateUsed { get; set; }
+        public Nullable<decimal> Amount { get; set; }
     
         public virtual MandateLog MandateLog { get; set; }
     }

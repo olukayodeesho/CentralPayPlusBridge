@@ -115,7 +115,7 @@ namespace CentralPayPlusBridge.DAO
             return isSuccessful; 
         }
 
-        public static bool ValidateOtp(string mandateCode, string otp)
+        public static bool ValidateOtp(string mandateCode, string otp, decimal? amount)
         {
 
             CentralPayOtp resp = new DAO.CentralPayOtp();
@@ -125,7 +125,7 @@ namespace CentralPayPlusBridge.DAO
 
                 using (var context = new CentralPayBridgeEntities())
                 {
-                    resp = context.CentralPayOtps.FirstOrDefault(g => g.MandateLog.MandateCode.Trim().ToLower().Equals(mandateCode.Trim().ToLower()) && g.otp.Equals(otp));
+                    resp = context.CentralPayOtps.FirstOrDefault(g => g.MandateLog.MandateCode.Trim().ToLower().Equals(mandateCode.Trim().ToLower()) && g.otp.Equals(otp) && g.Amount == amount);
                     if (resp != null) { isValid = true; }
                      }
             }

@@ -1,0 +1,275 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:tns="http://tempuri.org/" xmlns:s="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:tm="http://microsoft.com/wsdl/mime/textMatching/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://tempuri.org/">
+      <s:element name="CreateMandateRequest">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="createMandateXmlStr" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CreateMandateRequestResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CreateMandateRequestResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CancelMandateRequest">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="cancelMandateXmlStr" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="CancelMandateRequestResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="CancelMandateRequestResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GenerateOTPRequest">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="generateOtpXmlStr" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GenerateOTPRequestResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GenerateOTPRequestResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GenerateOTPWithoutCustomerValidationRequest">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="generateOtpWithoutCustomerValidationXmlStr" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="GenerateOTPWithoutCustomerValidationRequestResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="GenerateOTPWithoutCustomerValidationRequestResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ValidateOTPRequest">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="validateOtpXmlStr" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ValidateOTPRequestResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ValidateOTPRequestResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ValidateOTPWithoutCustomerValidationRequest">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="validateOtpWithoutCustomerValidationXmlStr" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="ValidateOTPWithoutCustomerValidationRequestResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="ValidateOTPWithoutCustomerValidationRequestResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
+  <wsdl:message name="CreateMandateRequestSoapIn">
+    <wsdl:part name="parameters" element="tns:CreateMandateRequest" />
+  </wsdl:message>
+  <wsdl:message name="CreateMandateRequestSoapOut">
+    <wsdl:part name="parameters" element="tns:CreateMandateRequestResponse" />
+  </wsdl:message>
+  <wsdl:message name="CancelMandateRequestSoapIn">
+    <wsdl:part name="parameters" element="tns:CancelMandateRequest" />
+  </wsdl:message>
+  <wsdl:message name="CancelMandateRequestSoapOut">
+    <wsdl:part name="parameters" element="tns:CancelMandateRequestResponse" />
+  </wsdl:message>
+  <wsdl:message name="GenerateOTPRequestSoapIn">
+    <wsdl:part name="parameters" element="tns:GenerateOTPRequest" />
+  </wsdl:message>
+  <wsdl:message name="GenerateOTPRequestSoapOut">
+    <wsdl:part name="parameters" element="tns:GenerateOTPRequestResponse" />
+  </wsdl:message>
+  <wsdl:message name="GenerateOTPWithoutCustomerValidationRequestSoapIn">
+    <wsdl:part name="parameters" element="tns:GenerateOTPWithoutCustomerValidationRequest" />
+  </wsdl:message>
+  <wsdl:message name="GenerateOTPWithoutCustomerValidationRequestSoapOut">
+    <wsdl:part name="parameters" element="tns:GenerateOTPWithoutCustomerValidationRequestResponse" />
+  </wsdl:message>
+  <wsdl:message name="ValidateOTPRequestSoapIn">
+    <wsdl:part name="parameters" element="tns:ValidateOTPRequest" />
+  </wsdl:message>
+  <wsdl:message name="ValidateOTPRequestSoapOut">
+    <wsdl:part name="parameters" element="tns:ValidateOTPRequestResponse" />
+  </wsdl:message>
+  <wsdl:message name="ValidateOTPWithoutCustomerValidationRequestSoapIn">
+    <wsdl:part name="parameters" element="tns:ValidateOTPWithoutCustomerValidationRequest" />
+  </wsdl:message>
+  <wsdl:message name="ValidateOTPWithoutCustomerValidationRequestSoapOut">
+    <wsdl:part name="parameters" element="tns:ValidateOTPWithoutCustomerValidationRequestResponse" />
+  </wsdl:message>
+  <wsdl:portType name="coreSoap">
+    <wsdl:operation name="CreateMandateRequest">
+      <wsdl:input message="tns:CreateMandateRequestSoapIn" />
+      <wsdl:output message="tns:CreateMandateRequestSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="CancelMandateRequest">
+      <wsdl:input message="tns:CancelMandateRequestSoapIn" />
+      <wsdl:output message="tns:CancelMandateRequestSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerateOTPRequest">
+      <wsdl:input message="tns:GenerateOTPRequestSoapIn" />
+      <wsdl:output message="tns:GenerateOTPRequestSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="GenerateOTPWithoutCustomerValidationRequest">
+      <wsdl:input message="tns:GenerateOTPWithoutCustomerValidationRequestSoapIn" />
+      <wsdl:output message="tns:GenerateOTPWithoutCustomerValidationRequestSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidateOTPRequest">
+      <wsdl:input message="tns:ValidateOTPRequestSoapIn" />
+      <wsdl:output message="tns:ValidateOTPRequestSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="ValidateOTPWithoutCustomerValidationRequest">
+      <wsdl:input message="tns:ValidateOTPWithoutCustomerValidationRequestSoapIn" />
+      <wsdl:output message="tns:ValidateOTPWithoutCustomerValidationRequestSoapOut" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="coreSoap" type="tns:coreSoap">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="CreateMandateRequest">
+      <soap:operation soapAction="http://tempuri.org/CreateMandateRequest" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelMandateRequest">
+      <soap:operation soapAction="http://tempuri.org/CancelMandateRequest" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GenerateOTPRequest">
+      <soap:operation soapAction="http://tempuri.org/GenerateOTPRequest" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GenerateOTPWithoutCustomerValidationRequest">
+      <soap:operation soapAction="http://tempuri.org/GenerateOTPWithoutCustomerValidationRequest" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateOTPRequest">
+      <soap:operation soapAction="http://tempuri.org/ValidateOTPRequest" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateOTPWithoutCustomerValidationRequest">
+      <soap:operation soapAction="http://tempuri.org/ValidateOTPWithoutCustomerValidationRequest" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:binding name="coreSoap12" type="tns:coreSoap">
+    <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="CreateMandateRequest">
+      <soap12:operation soapAction="http://tempuri.org/CreateMandateRequest" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="CancelMandateRequest">
+      <soap12:operation soapAction="http://tempuri.org/CancelMandateRequest" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GenerateOTPRequest">
+      <soap12:operation soapAction="http://tempuri.org/GenerateOTPRequest" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GenerateOTPWithoutCustomerValidationRequest">
+      <soap12:operation soapAction="http://tempuri.org/GenerateOTPWithoutCustomerValidationRequest" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateOTPRequest">
+      <soap12:operation soapAction="http://tempuri.org/ValidateOTPRequest" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ValidateOTPWithoutCustomerValidationRequest">
+      <soap12:operation soapAction="http://tempuri.org/ValidateOTPWithoutCustomerValidationRequest" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="core">
+    <wsdl:port name="coreSoap" binding="tns:coreSoap">
+      <soap:address location="http://localhost:50338/core.asmx" />
+    </wsdl:port>
+    <wsdl:port name="coreSoap12" binding="tns:coreSoap12">
+      <soap12:address location="http://localhost:50338/core.asmx" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

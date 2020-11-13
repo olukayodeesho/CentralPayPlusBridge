@@ -8,7 +8,7 @@ namespace CentralPayPlusBridge.CustomObject
     public class ValidateOTPRequest
     {
         public string MandateCode { get; set; }
-  
+        public string OTP { get; set; }
         public string TransType { get; set; }
         public string BankCode { get; set; }
         public string BillerID { get; set; }
