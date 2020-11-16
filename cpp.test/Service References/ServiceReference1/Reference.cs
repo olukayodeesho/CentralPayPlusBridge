@@ -56,6 +56,13 @@ namespace cpp.test.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/ValidateOTPWithoutCustomerValidationRequest", ReplyAction="*")]
         System.Threading.Tasks.Task<cpp.test.ServiceReference1.ValidateOTPWithoutCustomerValidationRequestResponse> ValidateOTPWithoutCustomerValidationRequestAsync(cpp.test.ServiceReference1.ValidateOTPWithoutCustomerValidationRequestRequest request);
+        
+        // CODEGEN: Generating message contract since element name mandateRequeryXmlStr from namespace http://tempuri.org/ is not marked nillable
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/DoMandateRequery", ReplyAction="*")]
+        cpp.test.ServiceReference1.DoMandateRequeryResponse DoMandateRequery(cpp.test.ServiceReference1.DoMandateRequeryRequest request);
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/DoMandateRequery", ReplyAction="*")]
+        System.Threading.Tasks.Task<cpp.test.ServiceReference1.DoMandateRequeryResponse> DoMandateRequeryAsync(cpp.test.ServiceReference1.DoMandateRequeryRequest request);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -466,6 +473,74 @@ namespace cpp.test.ServiceReference1 {
         }
     }
     
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class DoMandateRequeryRequest {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="DoMandateRequery", Namespace="http://tempuri.org/", Order=0)]
+        public cpp.test.ServiceReference1.DoMandateRequeryRequestBody Body;
+        
+        public DoMandateRequeryRequest() {
+        }
+        
+        public DoMandateRequeryRequest(cpp.test.ServiceReference1.DoMandateRequeryRequestBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class DoMandateRequeryRequestBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string mandateRequeryXmlStr;
+        
+        public DoMandateRequeryRequestBody() {
+        }
+        
+        public DoMandateRequeryRequestBody(string mandateRequeryXmlStr) {
+            this.mandateRequeryXmlStr = mandateRequeryXmlStr;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.ServiceModel.MessageContractAttribute(IsWrapped=false)]
+    public partial class DoMandateRequeryResponse {
+        
+        [System.ServiceModel.MessageBodyMemberAttribute(Name="DoMandateRequeryResponse", Namespace="http://tempuri.org/", Order=0)]
+        public cpp.test.ServiceReference1.DoMandateRequeryResponseBody Body;
+        
+        public DoMandateRequeryResponse() {
+        }
+        
+        public DoMandateRequeryResponse(cpp.test.ServiceReference1.DoMandateRequeryResponseBody Body) {
+            this.Body = Body;
+        }
+    }
+    
+    [System.Diagnostics.DebuggerStepThroughAttribute()]
+    [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
+    [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+    [System.Runtime.Serialization.DataContractAttribute(Namespace="http://tempuri.org/")]
+    public partial class DoMandateRequeryResponseBody {
+        
+        [System.Runtime.Serialization.DataMemberAttribute(EmitDefaultValue=false, Order=0)]
+        public string DoMandateRequeryResult;
+        
+        public DoMandateRequeryResponseBody() {
+        }
+        
+        public DoMandateRequeryResponseBody(string DoMandateRequeryResult) {
+            this.DoMandateRequeryResult = DoMandateRequeryResult;
+        }
+    }
+    
     [System.CodeDom.Compiler.GeneratedCodeAttribute("System.ServiceModel", "4.0.0.0")]
     public interface coreSoapChannel : cpp.test.ServiceReference1.coreSoap, System.ServiceModel.IClientChannel {
     }
@@ -641,6 +716,31 @@ namespace cpp.test.ServiceReference1 {
             inValue.Body = new cpp.test.ServiceReference1.ValidateOTPWithoutCustomerValidationRequestRequestBody();
             inValue.Body.validateOtpWithoutCustomerValidationXmlStr = validateOtpWithoutCustomerValidationXmlStr;
             return ((cpp.test.ServiceReference1.coreSoap)(this)).ValidateOTPWithoutCustomerValidationRequestAsync(inValue);
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        cpp.test.ServiceReference1.DoMandateRequeryResponse cpp.test.ServiceReference1.coreSoap.DoMandateRequery(cpp.test.ServiceReference1.DoMandateRequeryRequest request) {
+            return base.Channel.DoMandateRequery(request);
+        }
+        
+        public string DoMandateRequery(string mandateRequeryXmlStr) {
+            cpp.test.ServiceReference1.DoMandateRequeryRequest inValue = new cpp.test.ServiceReference1.DoMandateRequeryRequest();
+            inValue.Body = new cpp.test.ServiceReference1.DoMandateRequeryRequestBody();
+            inValue.Body.mandateRequeryXmlStr = mandateRequeryXmlStr;
+            cpp.test.ServiceReference1.DoMandateRequeryResponse retVal = ((cpp.test.ServiceReference1.coreSoap)(this)).DoMandateRequery(inValue);
+            return retVal.Body.DoMandateRequeryResult;
+        }
+        
+        [System.ComponentModel.EditorBrowsableAttribute(System.ComponentModel.EditorBrowsableState.Advanced)]
+        System.Threading.Tasks.Task<cpp.test.ServiceReference1.DoMandateRequeryResponse> cpp.test.ServiceReference1.coreSoap.DoMandateRequeryAsync(cpp.test.ServiceReference1.DoMandateRequeryRequest request) {
+            return base.Channel.DoMandateRequeryAsync(request);
+        }
+        
+        public System.Threading.Tasks.Task<cpp.test.ServiceReference1.DoMandateRequeryResponse> DoMandateRequeryAsync(string mandateRequeryXmlStr) {
+            cpp.test.ServiceReference1.DoMandateRequeryRequest inValue = new cpp.test.ServiceReference1.DoMandateRequeryRequest();
+            inValue.Body = new cpp.test.ServiceReference1.DoMandateRequeryRequestBody();
+            inValue.Body.mandateRequeryXmlStr = mandateRequeryXmlStr;
+            return ((cpp.test.ServiceReference1.coreSoap)(this)).DoMandateRequeryAsync(inValue);
         }
     }
 }

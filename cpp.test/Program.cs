@@ -12,7 +12,9 @@ namespace cpp.test
         {
             //createMandateReq();
             //generateOTPReq();
-            validateOTPReq();
+            //validateOTPReq();
+            // cancelReq();
+            RequeryMandate();
         }
         public static string getXmlDeclaration()
         {
@@ -41,7 +43,7 @@ namespace cpp.test
             {
                 var client = new ServiceReference1.coreSoapClient();
                 var req = "";
-                req = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\" ?><GenerateOTPRequest><MandateCode>CpayMD00000003</MandateCode><TransType>2</TransType<Amount>100</Amount>BankCode>000017</BankCode><BillerID>1239032</BillerID><BillerName>Konga</BillerName><BillerTransId>10926172</BillerTransId><HashValue>XXXXXXXXX</HashValue></GenerateOTPRequest>";
+                req = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\" ?><GenerateOTPRequest><MandateCode>CpayMD00000003</MandateCode><TransType>2</TransType><Amount>100</Amount><BankCode>000017</BankCode><BillerID>1239032</BillerID><BillerName>Konga</BillerName><BillerTransId>10926172</BillerTransId><HashValue>XXXXXXXXX</HashValue></GenerateOTPRequest>";
 
 
                 var response = client.GenerateOTPRequest(req);
@@ -63,6 +65,40 @@ namespace cpp.test
 
 
                 var response = client.ValidateOTPRequest(req);
+                Console.WriteLine(" request  : " + req);
+                Console.WriteLine(" response " + response);
+
+            }
+            catch (Exception e) { }
+
+        }
+  private static void RequeryMandate()
+        {
+            try
+            {
+                var client = new ServiceReference1.coreSoapClient();
+                var req = "";
+                req = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\" ?><RequeryMandateRequest><MandateCode>CpayMD00000004</MandateCode><BillerID>123</BillerID><HashValue>XXXXXXXXX</HashValue></RequeryMandateRequest>";
+
+
+                var response = client.DoMandateRequery(req);
+                Console.WriteLine(" request  : " + req);
+                Console.WriteLine(" response " + response);
+
+            }
+            catch (Exception e) { }
+
+        }
+        private static void cancelReq()
+        {
+            try
+            {
+                var client = new ServiceReference1.coreSoapClient();
+                var req = "";
+                req = "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"yes\" ?><CancelMandateRequest><MandateCode>CpayMD00000003</MandateCode><TransType>3</TransType><BankCode>000017</BankCode><OTP>996156</OTP><Amount>100</Amount><BillerID>1239032</BillerID><BillerName>Konga</BillerName><BillerTransId>10926172</BillerTransId><HashValue>XXXXXXXXX</HashValue></CancelMandateRequest>";
+
+
+                var response = client.CancelMandateRequest(req);
                 Console.WriteLine(" request  : " + req);
                 Console.WriteLine(" response " + response);
 

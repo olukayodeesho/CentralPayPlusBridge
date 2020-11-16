@@ -10,10 +10,11 @@ namespace CentralPayPlusBridge.DAO
     {
         public static void SaveExceptionLog(Exception e)
         {
+            Exception innerMostException = e;
+            while (innerMostException.InnerException != null) { innerMostException = innerMostException.InnerException; }
             try
             {
-                Exception innerMostException = e; 
-                while (innerMostException.InnerException != null) { innerMostException = innerMostException.InnerException;  }
+
                 using (var context = new CentralPayBridgeEntities())
                 {
                     var ex = new ExceptionLog();
@@ -28,8 +29,10 @@ namespace CentralPayPlusBridge.DAO
             }
             catch (Exception ext)
             {
-                Utils.LogError(e, "Original exception meant to be saved on the db ");
-                Utils.LogError(ext, "Failed to create SaveExceptionLog ");
+                Utils.LogError(innerMostException, "Original exception meant to be saved on the db ");
+                Exception innerMostExceptionforDB = ext;
+                while (innerMostExceptionforDB.InnerException != null) { innerMostExceptionforDB = innerMostExceptionforDB.InnerException; }
+                Utils.LogError(innerMostExceptionforDB, "Failed to create SaveExceptionLog ");
             }
         }
     }

@@ -86,6 +86,20 @@
           </s:sequence>
         </s:complexType>
       </s:element>
+      <s:element name="DoMandateRequery">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="mandateRequeryXmlStr" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+      <s:element name="DoMandateRequeryResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element minOccurs="0" maxOccurs="1" name="DoMandateRequeryResult" type="s:string" />
+          </s:sequence>
+        </s:complexType>
+      </s:element>
     </s:schema>
   </wsdl:types>
   <wsdl:message name="CreateMandateRequestSoapIn">
@@ -124,6 +138,12 @@
   <wsdl:message name="ValidateOTPWithoutCustomerValidationRequestSoapOut">
     <wsdl:part name="parameters" element="tns:ValidateOTPWithoutCustomerValidationRequestResponse" />
   </wsdl:message>
+  <wsdl:message name="DoMandateRequerySoapIn">
+    <wsdl:part name="parameters" element="tns:DoMandateRequery" />
+  </wsdl:message>
+  <wsdl:message name="DoMandateRequerySoapOut">
+    <wsdl:part name="parameters" element="tns:DoMandateRequeryResponse" />
+  </wsdl:message>
   <wsdl:portType name="coreSoap">
     <wsdl:operation name="CreateMandateRequest">
       <wsdl:input message="tns:CreateMandateRequestSoapIn" />
@@ -148,6 +168,10 @@
     <wsdl:operation name="ValidateOTPWithoutCustomerValidationRequest">
       <wsdl:input message="tns:ValidateOTPWithoutCustomerValidationRequestSoapIn" />
       <wsdl:output message="tns:ValidateOTPWithoutCustomerValidationRequestSoapOut" />
+    </wsdl:operation>
+    <wsdl:operation name="DoMandateRequery">
+      <wsdl:input message="tns:DoMandateRequerySoapIn" />
+      <wsdl:output message="tns:DoMandateRequerySoapOut" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="coreSoap" type="tns:coreSoap">
@@ -206,6 +230,15 @@
         <soap:body use="literal" />
       </wsdl:output>
     </wsdl:operation>
+    <wsdl:operation name="DoMandateRequery">
+      <soap:operation soapAction="http://tempuri.org/DoMandateRequery" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
   </wsdl:binding>
   <wsdl:binding name="coreSoap12" type="tns:coreSoap">
     <soap12:binding transport="http://schemas.xmlsoap.org/soap/http" />
@@ -256,6 +289,15 @@
     </wsdl:operation>
     <wsdl:operation name="ValidateOTPWithoutCustomerValidationRequest">
       <soap12:operation soapAction="http://tempuri.org/ValidateOTPWithoutCustomerValidationRequest" style="document" />
+      <wsdl:input>
+        <soap12:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap12:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DoMandateRequery">
+      <soap12:operation soapAction="http://tempuri.org/DoMandateRequery" style="document" />
       <wsdl:input>
         <soap12:body use="literal" />
       </wsdl:input>

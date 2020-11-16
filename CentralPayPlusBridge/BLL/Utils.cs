@@ -35,7 +35,9 @@ namespace CentralPayPlusBridge.BLL
 
         public static void LogError(Exception e, string message)
         {
-            logger.Error(e, message);
+            logger.Error(e, "1" + message);
+            logger.Error(e, string.Format("message : {0}  ; exception message : {1} ; exception source : {2} ; exception stack trace : {3}  ", message , e.Message , e.Source, e.StackTrace  ));
+            logger.ErrorException(message,  e);
         }
 
         public static void LogInfo(string message)
@@ -52,6 +54,10 @@ namespace CentralPayPlusBridge.BLL
                 r = GenerateNewOtp();
             }
             return r;
+        }
+        public static string GenerateReferenceNumber()
+        {
+            return DateTime.Now.ToString("yyyyMMddHHmmssffffff");
         }
     }
 }

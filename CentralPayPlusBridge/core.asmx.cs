@@ -48,6 +48,10 @@ namespace CentralPayPlusBridge
         {
             return CentralPayLogic.DoOTPValidationWithoutCustomerRegistration(validateOtpWithoutCustomerValidationXmlStr);
         }
-
+        [WebMethod]
+        public string DoMandateRequery(string mandateRequeryXmlStr)
+        {
+            return CentralPayLogic.DoMandateRequery(mandateRequeryXmlStr);
+        }
     }
 }

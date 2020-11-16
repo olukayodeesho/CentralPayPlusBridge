@@ -61,6 +61,9 @@
     <None Include="Service References\ServiceReference1\cpp.test.ServiceReference1.CreateMandateRequestResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>
+    <None Include="Service References\ServiceReference1\cpp.test.ServiceReference1.DoMandateRequeryResponse.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </None>
     <None Include="Service References\ServiceReference1\cpp.test.ServiceReference1.GenerateOTPRequestResponse.datasource">
       <DependentUpon>Reference.svcmap</DependentUpon>
     </None>

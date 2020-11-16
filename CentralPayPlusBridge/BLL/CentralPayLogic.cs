@@ -25,7 +25,7 @@ namespace CentralPayPlusBridge.BLL
                 CreateMandateRequest obj = ser.Deserialize<CreateMandateRequest>(createMandateStr);
                 if (obj != null)
                 {
-                    if (!string.IsNullOrEmpty( obj.BillerID) || !string.IsNullOrEmpty(obj.BillerName) || !string.IsNullOrEmpty(obj.BillerTransId) || !string.IsNullOrEmpty(obj.AcctName) || !string.IsNullOrEmpty(obj.AcctNumber) || !string.IsNullOrEmpty(obj.BankCode))
+                    if (!string.IsNullOrEmpty(obj.BillerID) || !string.IsNullOrEmpty(obj.BillerName) || !string.IsNullOrEmpty(obj.BillerTransId) || !string.IsNullOrEmpty(obj.AcctName) || !string.IsNullOrEmpty(obj.AcctNumber) || !string.IsNullOrEmpty(obj.BankCode))
                     {
                         MandateLog mlog = new MandateLog()
                         {
@@ -69,7 +69,11 @@ namespace CentralPayPlusBridge.BLL
                 }
                 xmlOutputData = ser.Serialize<CreateMandateResponse>(objResp);
             }
-            catch (Exception e) { ExceptionLogRepo.SaveExceptionLog(e); }
+            catch (Exception e)
+            {
+                ExceptionLogRepo.SaveExceptionLog(e);
+                xmlOutputData = ser.Serialize<CreateMandateResponse>(new CreateMandateResponse { ResponseCode = ResponseCodeMap.InvalidXml });
+            }
             DateTime responseTime = DateTime.Now;
             RequestResponseRepository.SaveRequestResponse("ASMX", createMandateStr, requestTime, "", xmlOutputData, responseTime);
             return xmlOutputData;
@@ -115,7 +119,10 @@ namespace CentralPayPlusBridge.BLL
                 }
                 xmlOutputData = ser.Serialize<CancelMandateResponse>(objResp);
             }
-            catch (Exception e) { ExceptionLogRepo.SaveExceptionLog(e); }
+            catch (Exception e) {
+             ExceptionLogRepo.SaveExceptionLog(e);
+              xmlOutputData = ser.Serialize<CancelMandateResponse>(new CancelMandateResponse { ResponseCode = ResponseCodeMap.InvalidXml });
+            }
             DateTime responseTime = DateTime.Now;
             RequestResponseRepository.SaveRequestResponse("ASMX", requestStr, requestTime, "", xmlOutputData, responseTime);
             return xmlOutputData;
@@ -143,7 +150,7 @@ namespace CentralPayPlusBridge.BLL
                             IsUsed = false,
                             MandateCodeId = mandate.Id,
                             otp = Utils.GenerateNewOtp(),
-                            Amount = Convert.ToDecimal( obj.Amount),
+                            Amount = Convert.ToDecimal(obj.Amount),
                             ReferenceNumber = Guid.NewGuid().ToString()
                         };
                         bool isSaved = MandateRepo.SaveCentralPayOtp(otp);
@@ -159,8 +166,9 @@ namespace CentralPayPlusBridge.BLL
                             BillerTransId = obj.BillerTransId,
                             MandateCode = obj.MandateCode,
                             TransType = obj.TransType,
-                            Amount = obj.Amount, 
-                            ResponseCode = responseCode
+                            Amount = obj.Amount,
+                            ResponseCode = responseCode,
+                            ReferenceNumber = Utils.GenerateReferenceNumber()
 
                         };
                     }
@@ -173,7 +181,10 @@ namespace CentralPayPlusBridge.BLL
 
                 xmlOutputData = ser.Serialize<GenerateOTPResponse>(objResp);
             }
-            catch (Exception e) { ExceptionLogRepo.SaveExceptionLog(e); }
+            catch (Exception e) { 
+            ExceptionLogRepo.SaveExceptionLog(e);
+             xmlOutputData = ser.Serialize<GenerateOTPResponse>(new GenerateOTPResponse { ResponseCode = ResponseCodeMap.InvalidXml }); 
+             }
             DateTime responseTime = DateTime.Now;
             RequestResponseRepository.SaveRequestResponse("ASMX", requestStr, requestTime, "", xmlOutputData, responseTime);
             return xmlOutputData;
@@ -185,7 +196,7 @@ namespace CentralPayPlusBridge.BLL
             string xmlOutputData = string.Empty;
             string responseCode = string.Empty;
             DateTime requestTime = DateTime.Now;
-            GenerateOTPResponseEx objResp = new GenerateOTPResponseEx();
+            GenerateOTPResponse objResp = new GenerateOTPResponse();
 
             try
             {
@@ -201,7 +212,7 @@ namespace CentralPayPlusBridge.BLL
                             IsUsed = false,
                             MandateCodeId = mandate.Id,
                             otp = Utils.GenerateNewOtp(),
-                            Amount = Convert.ToDecimal( obj.Amount),
+                            Amount = Convert.ToDecimal(obj.Amount),
                             ReferenceNumber = Guid.NewGuid().ToString()
                         };
 
@@ -209,7 +220,7 @@ namespace CentralPayPlusBridge.BLL
 
                         responseCode = isSaved ? ResponseCodeMap.Successful : ResponseCodeMap.UnknownError;
 
-                        objResp = new GenerateOTPResponseEx
+                        objResp = new GenerateOTPResponse
                         {
 
                             BankCode = obj.BankCode,
@@ -222,16 +233,18 @@ namespace CentralPayPlusBridge.BLL
 
                         };
                     }
-                    else { objResp = new GenerateOTPResponseEx { ResponseCode = ResponseCodeMap.USerNotSetUp }; }
+                    else { objResp = new GenerateOTPResponse { ResponseCode = ResponseCodeMap.USerNotSetUp }; }
                 }
                 else
                 {
-                    objResp = new GenerateOTPResponseEx { ResponseCode = ResponseCodeMap.InvalidXml };
+                    objResp = new GenerateOTPResponse { ResponseCode = ResponseCodeMap.InvalidXml };
                 }
 
-                xmlOutputData = ser.Serialize<GenerateOTPResponseEx>(objResp);
+                xmlOutputData = ser.Serialize<GenerateOTPResponse>(objResp);
             }
-            catch (Exception e) { ExceptionLogRepo.SaveExceptionLog(e); }
+            catch (Exception e) { ExceptionLogRepo.SaveExceptionLog(e);
+                xmlOutputData = ser.Serialize<GenerateOTPResponse>(new GenerateOTPResponse { ResponseCode = ResponseCodeMap.InvalidXml });
+            }
             DateTime responseTime = DateTime.Now;
             RequestResponseRepository.SaveRequestResponse("ASMX", requestStr, requestTime, "", xmlOutputData, responseTime);
             return xmlOutputData;
@@ -250,7 +263,7 @@ namespace CentralPayPlusBridge.BLL
                 ValidateOTPRequest obj = ser.Deserialize<ValidateOTPRequest>(requestStr);
                 if (obj != null)
                 {
-                    bool isSaved = MandateRepo.ValidateOtp(obj.MandateCode, obj.OTP, Convert.ToDecimal( obj.Amount));
+                    bool isSaved = MandateRepo.ValidateOtp(obj.MandateCode, obj.OTP, Convert.ToDecimal(obj.Amount));
 
                     responseCode = isSaved ? ResponseCodeMap.Successful : ResponseCodeMap.InvalidXml;
 
@@ -275,7 +288,9 @@ namespace CentralPayPlusBridge.BLL
                 }
                 xmlOutputData = ser.Serialize<ValidateOTPResponse>(objResp);
             }
-            catch (Exception e) { ExceptionLogRepo.SaveExceptionLog(e); }
+            catch (Exception e) { ExceptionLogRepo.SaveExceptionLog(e);
+                xmlOutputData = ser.Serialize<ValidateOTPResponse>(new ValidateOTPResponse { ResponseCode = ResponseCodeMap.InvalidXml });
+            }
             DateTime responseTime = DateTime.Now;
             RequestResponseRepository.SaveRequestResponse("ASMX", requestStr, requestTime, "", xmlOutputData, responseTime);
             return xmlOutputData;
@@ -287,18 +302,18 @@ namespace CentralPayPlusBridge.BLL
             string xmlOutputData = string.Empty;
             string responseCode = string.Empty;
             DateTime requestTime = DateTime.Now;
-            ValidateOTPResponseEx objResp = new ValidateOTPResponseEx();
+            ValidateOTPResponse objResp = new ValidateOTPResponse();
 
             try
             {
                 ValidateOTPRequestEx obj = ser.Deserialize<ValidateOTPRequestEx>(requestStr);
                 if (obj != null)
                 {
-                    bool isSaved = MandateRepo.ValidateOtp(obj.MandateCode, obj.OTP, Convert.ToDecimal( obj.Amount));
+                    bool isSaved = MandateRepo.ValidateOtp(obj.MandateCode, obj.OTP, Convert.ToDecimal(obj.Amount));
 
                     responseCode = isSaved ? ResponseCodeMap.Successful : ResponseCodeMap.InvalidXml;
 
-                    objResp = new ValidateOTPResponseEx
+                    objResp = new ValidateOTPResponse
                     {
                         BankCode = obj.BankCode,
                         BillerID = obj.BillerID,
@@ -315,11 +330,13 @@ namespace CentralPayPlusBridge.BLL
                 }
                 else
                 {
-                    objResp = new ValidateOTPResponseEx { ResponseCode = ResponseCodeMap.InvalidXml };
+                    objResp = new ValidateOTPResponse { ResponseCode = ResponseCodeMap.InvalidXml };
                 }
-                xmlOutputData = ser.Serialize<ValidateOTPResponseEx>(objResp);
+                xmlOutputData = ser.Serialize<ValidateOTPResponse>(objResp);
             }
-            catch (Exception e) { ExceptionLogRepo.SaveExceptionLog(e); }
+            catch (Exception e) { ExceptionLogRepo.SaveExceptionLog(e);
+                xmlOutputData = ser.Serialize<ValidateOTPResponse>(new ValidateOTPResponse { ResponseCode = ResponseCodeMap.InvalidXml });
+            }
             DateTime responseTime = DateTime.Now;
             RequestResponseRepository.SaveRequestResponse("ASMX", requestStr, requestTime, "", xmlOutputData, responseTime);
             return xmlOutputData;
@@ -353,6 +370,8 @@ namespace CentralPayPlusBridge.BLL
                         TransType = mandate.TransType,
                         ResponseCode = responseCode,
                         HashValue = mandate.HashValue,
+                        AcctName = mandate.AccountName,
+                        AcctNumber = mandate.AccountNumber
 
 
 
@@ -364,7 +383,9 @@ namespace CentralPayPlusBridge.BLL
                 }
                 xmlOutputData = ser.Serialize<RequeryMandateResponse>(objResp);
             }
-            catch (Exception e) { ExceptionLogRepo.SaveExceptionLog(e); }
+            catch (Exception e) { ExceptionLogRepo.SaveExceptionLog(e);
+                xmlOutputData = ser.Serialize<RequeryMandateResponse>(new RequeryMandateResponse { ResponseCode = ResponseCodeMap.InvalidXml });
+            }
             DateTime responseTime = DateTime.Now;
             RequestResponseRepository.SaveRequestResponse("ASMX", requestStr, requestTime, "", xmlOutputData, responseTime);
             return xmlOutputData;
@@ -391,7 +412,7 @@ namespace CentralPayPlusBridge.BLL
             XmlSerializer xmlSerializer = new XmlSerializer(ObjectToSerialize.GetType());
             XmlSerializerNamespaces ns = new XmlSerializerNamespaces();
             ns.Add("", "");
-             
+
             using (StringWriter textWriter = new StringWriter())
             {
                 xmlSerializer.Serialize(textWriter, ObjectToSerialize, ns);

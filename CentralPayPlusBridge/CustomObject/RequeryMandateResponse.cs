@@ -16,6 +16,8 @@ namespace CentralPayPlusBridge.CustomObject
         public string BillerTransId { get; set; }
         public string HashValue { get; set; }
         public string ResponseCode { get; set; }
+        public string AcctNumber { get; set; }
+        public string AcctName { get; set; }
 
     }
 }
